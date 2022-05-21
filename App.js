@@ -7,32 +7,15 @@
  */
 
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  Platform,
-  StatusBar,
-} from 'react-native';
-import {colors} from './src/utils/colors';
+import { AppProvider } from './src/context';
+import Main from './src';
 
-const App = () => {
+function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Hello world!</Text>
-    </SafeAreaView>
+    <AppProvider>
+      <Main />
+    </AppProvider>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    backgroundColor: colors.darkBlue,
-  },
-  text: {
-    color: colors.white,
-  },
-});
+}
 
 export default App;
