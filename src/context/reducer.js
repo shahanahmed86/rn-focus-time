@@ -11,7 +11,6 @@ export function reducer(state, action) {
       return {
         ...state,
         history: state.history.concat([state.currentSubject]),
-        currentSubject: null,
       };
     }
     case actions.CLEAR: {

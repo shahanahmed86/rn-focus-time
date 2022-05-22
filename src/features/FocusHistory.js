@@ -1,9 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, StyleSheet, Text, FlatList } from 'react-native';
 import { withAppContext } from '../context';
 import { colors, fontSizes, spacings } from '../utils';
 
 function FocusHistory({ history }) {
+  if (!Array.isArray(history) || !history.length) {
+    return <Text style={styles.title}>We haven't focus on anything yet!</Text>;
+  }
+
   const renderItem = ({ item }) => <Text style={styles.item}>- {item}</Text>;
   return (
     <View style={styles.container}>
@@ -30,5 +35,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+FocusHistory.propTypes = {
+  history: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+};
 
 export default withAppContext(FocusHistory);

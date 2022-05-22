@@ -10,16 +10,19 @@ const formatTime = time => (time < 10 ? `0${time}` : time);
 function Countdown({ minutes, isPaused, onProgress, onEnd }) {
   const interval = useRef(null);
 
-  const [milliSeconds, setMilliSeconds] = useState(minutesToMilliSeconds(minutes));
+  const [milliSeconds, setMilliSeconds] = useState(null);
+
+  const reset = useCallback(() => setMilliSeconds(minutesToMilliSeconds(minutes)), [minutes]);
 
   const countDown = useCallback(() => {
     if (milliSeconds === null) return;
     if (!isNaN(milliSeconds) && milliSeconds !== 0) return setMilliSeconds(milliSeconds - 1000);
     if (interval.current) clearInterval(interval.current);
 
-    onEnd();
-    setMilliSeconds(null);
-  }, [milliSeconds, onEnd]);
+    onEnd(reset);
+  }, [milliSeconds, onEnd, reset]);
+
+  useEffect(reset, [reset]);
 
   useEffect(() => {
     onProgress(milliSeconds / minutesToMilliSeconds(minutes));

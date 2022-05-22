@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { View, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { RoundedButton } from '../components';
@@ -47,5 +48,9 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
 });
+
+Focus.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default withAppContext(Focus);

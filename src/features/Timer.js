@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { View, StyleSheet, Text, Vibration } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 import { Countdown, RoundedButton } from '../components';
@@ -21,9 +22,15 @@ function Timer({ currentSubject, dispatch }) {
   const [progress, setProgress] = useState(1);
   const [minutes, setMinutes] = useState(0.1);
 
-  const onEnd = () => {
+  const onEnd = reset => {
     Vibration.vibrate(PATTERN);
+
+    setIsStarted(false);
+    setProgress(1);
+    setMinutes(0.1);
+
     dispatch({ type: actions.ADD });
+    reset();
   };
 
   useEffect(() => {
@@ -95,5 +102,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+Timer.propTypes = {
+  currentSubject: PropTypes.string,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default withAppContext(Timer);
